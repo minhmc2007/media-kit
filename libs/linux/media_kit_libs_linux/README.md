@@ -1,6 +1,6 @@
 # [package:media_kit_libs_linux](https://github.com/media-kit/media-kit)
 
-[![](https://img.shields.io/discord/1079685977523617792?color=33cd57&label=Discord&logo=discord&logoColor=discord)](https://discord.gg/h7qf2R9n57) [![Github Actions](https://github.com/media-kit/media-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/media-kit/media-kit/actions/workflows/ci.yml)
+[![](https://img.shields.io/discord/1079685977523617792?color=33cd57&label=Discord&logo=discord&logoColor=discord)](https://discord.gg/h7qf2R9n57) [![Github Actions](https://github.com/minhmc2007/media-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/minhmc2007/media-kit/actions/workflows/ci.yml)
 
 GNU/Linux dependency package for [`package:media_kit`](https://github.com/media-kit/media-kit). Necessary for initialization.
 
