@@ -3,6 +3,7 @@ name: GitHub Actions
 on:
   - push
   - pull_request
+  - workflow_dispatch
 
 jobs:
   media_kit-tests-windows:
