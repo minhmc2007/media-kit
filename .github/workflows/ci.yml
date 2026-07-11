@@ -21,6 +21,7 @@ permissions:
 jobs:
   media_kit-tests-windows:
     name: package:media_kit tests (Windows)
+    if: ${{ !(github.event_name == 'workflow_dispatch' && github.event.inputs.create_release == 'true') }}
     runs-on: windows-latest
     defaults:
       run:
@@ -46,6 +47,7 @@ jobs:
 
   media_kit-tests-linux:
     name: package:media_kit tests (Linux)
+    if: ${{ !(github.event_name == 'workflow_dispatch' && github.event.inputs.create_release == 'true') }}
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -67,6 +69,7 @@ jobs:
 
   media_kit-tests-macos:
     name: package:media_kit tests (macOS)
+    if: ${{ !(github.event_name == 'workflow_dispatch' && github.event.inputs.create_release == 'true') }}
     runs-on: macos-latest
     env:
       LIBMPV_LIBRARY_PATH: ${{ format('{0}/{1}', github.workspace, 'media_kit/test/ci/macos/libs/libmpv.dylib') }}
@@ -87,6 +90,7 @@ jobs:
 
   media_kit-tests-web:
     name: package:media_kit tests (Web)
+    if: ${{ !(github.event_name == 'workflow_dispatch' && github.event.inputs.create_release == 'true') }}
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -141,7 +145,7 @@ jobs:
             LOG=$(git log --oneline -20 --no-decorate)
             RANGE="initial..HEAD"
           fi
-          MPV_VER=$(grep -oP 'mpv-dev-x86_64-\K[^" ]+' libs/windows/media_kit_libs_windows_video/windows/CMakeLists.txt 2>/dev/null || echo "nightly")
+          MPV_VER=$(grep -oP 'mpv-dev-x86_64-\K[\w-]+' libs/windows/media_kit_libs_windows_video/windows/CMakeLists.txt 2>/dev/null || echo "nightly")
           cat > release-notes.md <<- EOF
           ## What's Changed
 
