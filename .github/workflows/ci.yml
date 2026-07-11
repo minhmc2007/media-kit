@@ -5,6 +5,9 @@ on:
   - pull_request
   - workflow_dispatch
 
+permissions:
+  contents: write
+
 jobs:
   media_kit-tests-windows:
     name: package:media_kit tests (Windows)
