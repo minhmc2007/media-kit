@@ -14,12 +14,17 @@ dependencies:
 
   media_kit:
     path: ../media_kit
-  media_kit_libs_video:
-    path: ../libs/universal/media_kit_libs_video
-  media_kit_libs_windows_video:
-    path: ../libs/windows/media_kit_libs_windows_video
   media_kit_video:
     path: ../media_kit_video
+
+  media_kit_libs_windows_video:
+    path: ../libs/windows/media_kit_libs_windows_video
+  media_kit_libs_macos_video:
+    path: ../libs/macos/media_kit_libs_macos_video
+  media_kit_libs_ios_video:
+    path: ../libs/ios/media_kit_libs_ios_video
+  media_kit_libs_android_video:
+    path: ../libs/android/media_kit_libs_android_video
 
   file_picker: ^12.0.0-beta.3
   http: ^1.2.2
