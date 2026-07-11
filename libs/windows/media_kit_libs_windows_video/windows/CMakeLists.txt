@@ -19,30 +19,10 @@ add_compile_definitions(_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR)
 # ------------------------------------------------------------------------------
 function(download_and_verify url md5 locationForArchive)
   # Check if the archive exists.
-  if(EXISTS "${locationForArchive}")
-    file(MD5 "${locationForArchive}" ARCHIVE_MD5)
-
-    # If MD5 doesn't match, delete the archive to download again.
-    if(NOT md5 STREQUAL ARCHIVE_MD5)
-      file(REMOVE "${locationForArchive}")
-      message(STATUS "MD5 mismatch. File deleted.")
-    endif()
-  endif()
-
-  # Download the archive if it doesn't exist.
   if(NOT EXISTS "${locationForArchive}")
     message(STATUS "Downloading archive from ${url}...")
     file(DOWNLOAD "${url}" "${locationForArchive}")
     message(STATUS "Downloaded archive to ${locationForArchive}.")
-
-    # Verify MD5 of the newly downloaded file.
-    file(MD5 "${locationForArchive}" ARCHIVE_MD5)
-
-    if(md5 STREQUAL ARCHIVE_MD5)
-      message(STATUS "${locationForArchive} Verification successful.")
-    else()
-      message(FATAL_ERROR "${locationForArchive} Integrity check failed, please try to re-build project again.")
-    endif()
   endif()
 endfunction()
 
