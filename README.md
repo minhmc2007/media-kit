@@ -2,7 +2,7 @@
 
 > **⚠️ This is a community fork of [media-kit/media-kit](https://github.com/media-kit/media-kit) with modernized mpv builds.**
 >
-> **Why this fork?** [AniCli Flutter](https://github.com/minhmc2007/anicli-flutter) needs a modern mpv with up-to-date TLS stack (TLS 1.3, HTTP/2, modern cipher suites) to connect to CDNs like okcdn & mp4upload. The upstream `media_kit_libs_windows_video` bundles `mpv-dev-x86_64-20241021-git-0f78584.7z` (Oct 2024), but the actual `mpv-2.dll` inside is built from a **Sep 2023 mpv source fork** — its curl/mbedtls stack can't negotiate with modern CDNs. External mpv **v0.41.0** (Dec 2025) works fine.
+> **Why this fork?** My app [AniCli Flutter](https://github.com/minhmc2007/anicli-flutter) needs a modern mpv with up-to-date TLS stack (TLS 1.3, HTTP/2, modern cipher suites) to connect to CDNs like okcdn & mp4upload. The upstream `media_kit_libs_windows_video` bundles `mpv-dev-x86_64-20241021-git-0f78584.7z` (Oct 2024), but the actual `mpv-2.dll` inside is built from a **Sep 2023 mpv source fork** — its curl/mbedtls stack can't negotiate with modern CDNs. External mpv **v0.41.0** (Dec 2025) works fine.
 >
 > This fork replaces the frozen Windows mpv builds with **automatic daily nightlies** from [shinchiro/mpv-winbuild-cmake](https://github.com/shinchiro/mpv-winbuild-cmake) — every build gets the freshest mpv with modern TLS. **Rolling release, like Arch Linux.**
 >
