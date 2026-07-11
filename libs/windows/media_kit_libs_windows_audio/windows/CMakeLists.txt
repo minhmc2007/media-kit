@@ -66,16 +66,16 @@ endfunction()
 # Detect architecture and set appropriate libmpv archive
 if(${FLUTTER_TARGET_PLATFORM} STREQUAL "windows-x64")
   set(LIBMPV_ARCH "x86_64")
-  set(LIBMPV "mpv-dev-x86_64-20251213-git-140ec21.7z")
-  set(LIBMPV_MD5 "bf77216724f0f290dd14d2b1bc9826df")
+  set(LIBMPV "mpv-dev-x86_64-20260607-git-71ebd08.7z")
+  set(LIBMPV_MD5 "650A6C8FDE5855A7CB3E219616D5D5F2")
 else()
   set(LIBMPV_ARCH "aarch64")
-  set(LIBMPV "mpv-dev-aarch64-20251213-git-140ec21.7z")
-  set(LIBMPV_MD5 "fc3c09cd5bed08db58f888460da9059f")
+  set(LIBMPV "mpv-dev-aarch64-20260607-git-71ebd08.7z")
+  set(LIBMPV_MD5 "C1FFE70CA6F4C17DC4B2FF0E28B49EA2")
 endif()
 
-# Download URL for the libmpv archive from the latest release
-set(LIBMPV_URL "https://github.com/media-kit/libmpv-win32-audio-cmake/releases/download/20251213/${LIBMPV}")
+# Download URL for the libmpv archive from shinchiro nightly builds
+set(LIBMPV_URL "https://github.com/shinchiro/mpv-winbuild-cmake/releases/download/20260607/${LIBMPV}")
 
 # Download location of the libmpv archive.
 set(LIBMPV_ARCHIVE "${CMAKE_BINARY_DIR}/${LIBMPV}")

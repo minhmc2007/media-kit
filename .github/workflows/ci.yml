@@ -22,9 +22,9 @@ jobs:
 
       - name: Setup libmpv for Windows
         run: |
-          curl -LO https://github.com/media-kit/libmpv-win32-video-build/releases/download/2023-08-11/mpv-dev-x86_64-20230811-git-140ec21.7z
-          cmake -E md5sum mpv-dev-x86_64-20230811-git-140ec21.7z | find /i "c7d1d766a6404d58a876aca403e0f53a" > nul || exit 1
-          cmake -E tar x mpv-dev-x86_64-20230811-git-140ec21.7z libmpv-2.dll
+          curl -LO https://github.com/shinchiro/mpv-winbuild-cmake/releases/download/20260607/mpv-dev-x86_64-20260607-git-71ebd08.7z
+          cmake -E md5sum mpv-dev-x86_64-20260607-git-71ebd08.7z | find /i "650a6c8fde5855a7cb3e219616d5d5f2" > nul || exit 1
+          cmake -E tar x mpv-dev-x86_64-20260607-git-71ebd08.7z libmpv-2.dll
         shell: cmd
 
       - run: dart pub get
