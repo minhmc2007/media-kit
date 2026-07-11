@@ -428,15 +428,14 @@ jobs:
         with:
           channel: "stable"
           cache: true
-      - name: Remove `media_kit_libs_*` dependencies
+      - name: Remove `media_kit_libs_*` dependencies & `media_kit_video`
         run: |
           "C:\Program Files\Git\usr\bin\sed.exe" -i "s/\bmedia_kit_libs\([^[ ]*\)_video\b/media_kit_libs\1_audio/g" pubspec.yaml
+          "C:\Program Files\Git\usr\bin\sed.exe" -i "/^.*media_kit_video.*$/d" pubspec.yaml
           type pubspec.yaml
         shell: cmd
       - run: flutter pub get
       - run: flutter build windows --verbose
-        # TODO(@alexmercerind): package:media_kit_video won't build with package:media_kit_libs_windows_audio due to missing ANGLE headers.
-        continue-on-error: true
 
   audio-libs-linux:
     name: Linux (audio libs)
