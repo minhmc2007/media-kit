@@ -14,11 +14,10 @@ set(PROJECT_NAME "media_kit_libs_windows_audio")
 project(${PROJECT_NAME} LANGUAGES CXX)
 
 # ------------------------------------------------------------------------------
-function(download_and_verify url md5 locationForArchive)
-  # Check if the archive exists.
+function(download_and_verify url locationForArchive)
   if(NOT EXISTS "${locationForArchive}")
     message(STATUS "Downloading archive from ${url}...")
-    file(DOWNLOAD "${url}" "${locationForArchive}")
+    file(DOWNLOAD "${url}" "${locationForArchive}" SHOW_PROGRESS)
     message(STATUS "Downloaded archive to ${locationForArchive}.")
   endif()
 endfunction()
@@ -43,29 +42,49 @@ endfunction()
 
 # Thanks to Mitchel Stewart (https://github.com/Quackdoc) for providing patches to generate minimal libmpv & FFmpeg audio specific builds.
 
-# Detect architecture and set appropriate libmpv archive
+# Detect architecture
 if(${FLUTTER_TARGET_PLATFORM} STREQUAL "windows-x64")
   set(LIBMPV_ARCH "x86_64")
-  set(LIBMPV "mpv-dev-x86_64-20260607-git-71ebd08.7z")
-  set(LIBMPV_MD5 "650A6C8FDE5855A7CB3E219616D5D5F2")
+  set(LIBMPV_FALLBACK_FILE "mpv-dev-x86_64-20260607-git-71ebd08.7z")
+  set(LIBMPV_FALLBACK_TAG "20260607")
 else()
   set(LIBMPV_ARCH "aarch64")
-  set(LIBMPV "mpv-dev-aarch64-20260607-git-71ebd08.7z")
-  set(LIBMPV_MD5 "C1FFE70CA6F4C17DC4B2FF0E28B49EA2")
+  set(LIBMPV_FALLBACK_FILE "mpv-dev-aarch64-20260607-git-71ebd08.7z")
+  set(LIBMPV_FALLBACK_TAG "20260607")
 endif()
 
-# Download URL for the libmpv archive from shinchiro nightly builds
-set(LIBMPV_URL "https://github.com/shinchiro/mpv-winbuild-cmake/releases/download/20260607/${LIBMPV}")
+# Auto-fetch latest shinchiro nightly via GitHub API
+set(LIBMPV_FILE "")
+set(LIBMPV_URL "")
+file(DOWNLOAD "https://api.github.com/repos/shinchiro/mpv-winbuild-cmake/releases/latest"
+     "${CMAKE_BINARY_DIR}/shinchiro.json" STATUS SHINCHIRO_STATUS TIMEOUT 10)
+list(GET SHINCHIRO_STATUS 0 SHINCHIRO_CODE)
+if(SHINCHIRO_CODE EQUAL 0)
+  file(READ "${CMAKE_BINARY_DIR}/shinchiro.json" SHINCHIRO_JSON)
+  file(REMOVE "${CMAKE_BINARY_DIR}/shinchiro.json")
+  string(JSON ASSETS LENGTH "${SHINCHIRO_JSON}" "assets")
+  math(EXPR ASSETS_LAST "${ASSETS} - 1")
+  foreach(I RANGE ${ASSETS_LAST})
+    string(JSON NAME GET "${SHINCHIRO_JSON}" "assets" ${I} "name")
+    if(NAME MATCHES "^mpv-dev-${LIBMPV_ARCH}-")
+      set(LIBMPV_FILE "${NAME}")
+      string(JSON LIBMPV_URL GET "${SHINCHIRO_JSON}" "assets" ${I} "browser_download_url")
+      break()
+    endif()
+  endforeach()
+endif()
+if(LIBMPV_FILE STREQUAL "")
+  message(WARNING "Failed to fetch latest shinchiro release, using fallback version")
+  set(LIBMPV_FILE "${LIBMPV_FALLBACK_FILE}")
+  set(LIBMPV_URL "https://github.com/shinchiro/mpv-winbuild-cmake/releases/download/${LIBMPV_FALLBACK_TAG}/${LIBMPV_FILE}")
+endif()
+message(STATUS "Using libmpv: ${LIBMPV_FILE}")
 
 # Download location of the libmpv archive.
-set(LIBMPV_ARCHIVE "${CMAKE_BINARY_DIR}/${LIBMPV}")
+set(LIBMPV_ARCHIVE "${CMAKE_BINARY_DIR}/${LIBMPV_FILE}")
 set(LIBMPV_SRC "${CMAKE_BINARY_DIR}/libmpv")
 
-download_and_verify(
-  ${LIBMPV_URL}
-  ${LIBMPV_MD5}
-  ${LIBMPV_ARCHIVE}
-)
+download_and_verify(${LIBMPV_URL} ${LIBMPV_ARCHIVE})
 
 check_directory_exists_and_not_empty(${LIBMPV_SRC} LIBMPV_SRC_VALID)
 
