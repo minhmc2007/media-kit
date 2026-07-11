@@ -16,6 +16,8 @@ dependencies:
     path: ../media_kit
   media_kit_libs_video:
     path: ../libs/universal/media_kit_libs_video
+  media_kit_libs_windows_video:
+    path: ../libs/windows/media_kit_libs_windows_video
   media_kit_video:
     path: ../media_kit_video
 
